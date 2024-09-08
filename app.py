@@ -1,15 +1,21 @@
 from flask import Flask, render_template, redirect, url_for, request, session, flash
+from flask_mysqldb import MySQL
+import MySQLdb.cursors
 
 app = Flask(__name__)
-app.secret_key = 'your_secret_key'  # Necessary for session management
+app.secret_key = 'your_secret_key'
 
-# Simulated user credentials (for demonstration purposes)
-USER_CREDENTIALS = {'username': 'admin', 'password': 'password'}
+# Configure MySQL connection
+app.config['MYSQL_HOST'] = 'localhost'
+app.config['MYSQL_USER'] = 'root'
+app.config['MYSQL_PASSWORD'] = 'root'
+app.config['MYSQL_DB'] = 'flask_login_db'
+
+mysql = MySQL(app)
 
 # Home route
 @app.route('/')
 def home():
-    # Check if the user is logged in
     if 'logged_in' in session and session['logged_in']:
         return render_template('index.html')
     else:
@@ -21,10 +27,15 @@ def login():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
-        
-        # Check if the credentials are correct
-        if username == USER_CREDENTIALS['username'] and password == USER_CREDENTIALS['password']:
+
+        # Query database to check if the user exists
+        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        cursor.execute('SELECT * FROM users WHERE username = %s AND password = %s', (username, password))
+        user = cursor.fetchone()
+
+        if user:
             session['logged_in'] = True
+            session['username'] = user['username']
             return redirect(url_for('home'))
         else:
             flash('Invalid username or password')

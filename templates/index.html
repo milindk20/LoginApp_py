@@ -6,7 +6,7 @@
     <title>Flask App</title>
 </head>
 <body>
-    <h1>Hello, Flask!</h1>
+    <h1>Hello, {{ session['username'] }}!</h1>
     <p>This is a basic window served by Flask.</p>
 
     {% if session.get('logged_in') %}
