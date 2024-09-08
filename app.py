@@ -2,14 +2,33 @@ from flask import Flask, render_template, redirect, url_for, request, session, f
 from flask_mysqldb import MySQL
 import MySQLdb.cursors
 
+import configparser
+
+# Create a ConfigParser object
+config = configparser.ConfigParser()
+
+# Read the configuration file
+config.read('C:\\Users\\Milind\\Desktop\\projects\\LoginApp_py\\config.conf')
+
+# Accessing data from the 'database' section
+db_host = config.get('database', 'host')
+db_port = config.getint('database', 'port')  # Convert to int
+db_user = config.get('database', 'user')
+db_password = config.get('database', 'password')
+db_dbname = config.get('database', 'databasename')
+
+# Accessing data from the 'Flask' section
+Flask_app_session_secretKey = config.get('flask_session', 'key')
+
+
 app = Flask(__name__)
-app.secret_key = 'your_secret_key'
+app.secret_key = Flask_app_session_secretKey # sessionKey
 
 # Configure MySQL connection
-app.config['MYSQL_HOST'] = 'localhost'
-app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = 'root'
-app.config['MYSQL_DB'] = 'flask_login_db'
+app.config['MYSQL_HOST'] = db_host
+app.config['MYSQL_USER'] = db_user
+app.config['MYSQL_PASSWORD'] = db_password
+app.config['MYSQL_DB'] = db_dbname
 
 mysql = MySQL(app)
 
