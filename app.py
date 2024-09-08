@@ -2,6 +2,7 @@ from flask import Flask, render_template, redirect, url_for, request, session, f
 from flask_mysqldb import MySQL
 import MySQLdb.cursors
 
+#==================================================ConfigFile==================================================
 import configparser
 
 # Create a ConfigParser object
@@ -19,7 +20,7 @@ db_dbname = config.get('database', 'databasename')
 
 # Accessing data from the 'Flask' section
 Flask_app_session_secretKey = config.get('flask_session', 'key')
-
+#===========================================================================================================
 
 app = Flask(__name__)
 app.secret_key = Flask_app_session_secretKey # sessionKey
