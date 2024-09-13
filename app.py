@@ -63,7 +63,7 @@ def login():
 
         # Query database to check if the user exists
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-        cursor.execute('SELECT * FROM users WHERE username = %s AND password = %s', (username, password))
+        cursor.execute('SELECT * FROM users WHERE username = %s AND password = %s;', (username, password))
         user = cursor.fetchone()
         print(session)
         if user:
@@ -81,22 +81,29 @@ def login():
 def create_new_user():
     if session_check()==1:
         if request.method == 'POST':
-            username = request.form['username']
-            email = request.form['email']
-            password = request.form['password']
+            username = str(request.form['username'])
+            email = str(request.form['email'])
+            password = str(request.form['password'])
 
             cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-
-            #Checkes if username or email exists already
-            #if  (cursor.execute('SELECT count(1) FROM users WHERE username = %s', (username)) >=1):
-             #   flash(f'Username {username} already exists!! please try a different one!!')
-           # if  (cursor.execute('SELECT count(1) FROM users WHERE email = %s', (email)) >=1):
-            #    flash(f'email {email} already exists!! please try a different one!!')
+            flag=0
+            #Checkes if username exists already
+            cursor.execute(f'SELECT count(1) as "countofuser" FROM users WHERE username = "{username}"')
+            count=cursor.fetchone()
+            if (count['countofuser'] >=1):
+                flash(f'Username {username} already exists!! please try a different one!!','danger')
+                flag=1
+            #Checkes if email exists already
+            cursor.execute(f'SELECT count(1) as "countofuser" FROM users WHERE email = "{email}"')
+            count=cursor.fetchone()
+            if (count['countofuser'] >=1):
+                flash(f'email {email} already exists!! please try a different one!!','danger')
+                flag=1
             # Query database to insert the new user exists
-#            else:    
-            cursor.execute('INSERT INTO users (username,email, password) VALUES (%s,%s, %s);', (username,email, password))
-            cursor.execute('commit')
-            flash(f'User "{username}" ha been created successfully!!','success')
+            if flag==0:
+                cursor.execute('INSERT INTO users (username,email, password) VALUES (%s,%s, %s);', (username,email, password))
+                cursor.execute('commit')
+                flash(f'User "{username}" ha been created successfully!!','success')
         return render_template('create_user.html')
     
     elif session_check() !=1:
