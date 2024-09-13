@@ -3,16 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flask App</title>
+    <title>Login - Flask App</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
-    <h1>Hello, {{ session['username'] }}!</h1>
-    <p>This is a basic window served by Flask.</p>
+    {% include 'header.html' %}
+    <main>
+        <h1>Hi {{ session.get('username') }}!</h1>
+    </main>
 
-    {% if session.get('logged_in') %}
-    <p>You are logged in. <a href="{{ url_for('logout') }}">Logout</a></p>
-    {% else %}
-    <p>You are logged out. Please <a href="{{ url_for('login') }}">Login</a>.</p>
-    {% endif %}
 </body>
 </html>

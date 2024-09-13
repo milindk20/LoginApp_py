@@ -1,0 +1,22 @@
+
+<header>
+    <div class="container">
+        <div class="logo">
+            <h1><a href="{{ url_for('home') }}">MyApp</a></h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('home') }}">Home</a></li>
+                <li><a href="{{ url_for('logout') }}">Logout</a></li>
+                <li><a href="{{ url_for('create_new_user') }}">create_new_user</a></li>
+            </ul>
+        </nav>
+        <div class="user-greeting">
+            {% if session.get('username') %}
+                <p>Hello, {{ session.get('username') }}!</p>
+            {% else %}
+                <p>Welcome, Guest!</p>
+            {% endif %}
+        </div>
+    </div>
+</header>
