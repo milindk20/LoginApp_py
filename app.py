@@ -75,14 +75,6 @@ def login():
     
     return render_template('login.html')
 
-# create_user route
-@app.route('/create_user', methods=['GET', 'POST'])
-def redirect_to_create_user():
-    if session_check()==1:
-        return render_template('create_user.html')
-    elif session_check() !=1:
-            return redirect(url_for('login'))
-
 
 # create_new_user route
 @app.route('/create_new_user', methods=['GET', 'POST'])
@@ -109,6 +101,20 @@ def create_new_user():
     
     elif session_check() !=1:
             return redirect(url_for('login'))
+
+
+# users_list route
+@app.route('/users_list')
+def users_list():
+    if session_check()==1:
+        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        cursor.execute('SELECT * FROM users')
+        users = cursor.fetchall()
+        return render_template('users_list.html', users=users)
+
+    elif session_check() !=1:
+            return redirect(url_for('login'))
+
 
 # Logout route
 @app.route('/logout')

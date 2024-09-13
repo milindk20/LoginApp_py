@@ -273,3 +273,66 @@ nav ul li a:hover {
 }
 
 /* ====================================== header  ======================================*/
+
+
+
+
+
+
+/*====================================== users list ====================================== */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 18px;
+    text-align: left;
+}
+
+table th, table td {
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+}
+
+table th {
+    background-color: #f2f2f2;
+}
+
+tr:hover {
+    background-color: #f5f5f5;
+}
+
+/* Flash message styling */
+.alert-success {
+    color: white;
+    background-color: green;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.alert-danger {
+    color: white;
+    background-color: red;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+/* Buttons */
+.btn {
+    padding: 5px 10px;
+    text-decoration: none;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn-edit {
+    background-color: blue;
+    color: white;
+}
+
+.btn-delete {
+    background-color: red;
+    color: white;
+}
