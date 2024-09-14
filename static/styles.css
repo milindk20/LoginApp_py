@@ -10,7 +10,6 @@ main {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding-top: 20%; /* Adjust based on header height */
 }
 
 header {
@@ -22,6 +21,10 @@ header {
     top: 0;
     left: 0;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+header button{
+    background: linear-gradient(135deg, #007bff, #00d2ff);
+    border-radius: 10px;
 }
 
 .login-container {
@@ -195,62 +198,80 @@ nav ul li a:hover {
     font-size: 16px;
 }
 
-
+/*=========================================== create new user ===========================================*/
+/* Flexbox layout for the form */
 .create_new_user-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 100%;
+    min-height: 100vh;
     padding: 20px;
+    width: 100%;
 }
 
-
-
+/* Card layout and hover effect */
 .create_new_user-card {
-    background: #fff;
+    background-color: #fff;
     border-radius: 12px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     padding: 30px;
-    max-width: 400px;
-    width: 100%;
+    max-width: 80%;
+    width: 40%; /* Adjusted to take 40% of the screen width */
     text-align: center;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
-
+/*
 .create_new_user-card:hover {
     transform: translateY(-10px);
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-}
+}*/
 
+/* Card header */
 .create_new_user-card h2 {
     margin-bottom: 20px;
     font-size: 28px;
     color: #333;
+    text-align: center;
 }
 
-.create_new_user-card label {
+/* Form container layout for 2-column structure */
+.form-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.form-container label,
+.form-container input {
+    width: 28%; /* 48% width to create space between fields */
+}
+
+.form-container input, select {
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+    box-sizing: border-box;
+    width: 55%; /* Adjusted width */
+}
+
+.form-container label {
     display: block;
     margin: 10px 0 5px;
     font-weight: 600;
     color: #555;
 }
 
-.create_new_user-card input {
-    width: calc(100% - 20px);
-    padding: 12px;
-    margin: 5px 0 15px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    font-size: 16px;
-    box-sizing: border-box;
-}
-
-.create_new_user-card input:focus {
+/* Input focus effect */
+.form-container input:focus {
     border-color: #007bff;
     outline: none;
     box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
 }
 
+
+/* Submit button styling */
 .create_new_user-card button {
     background: linear-gradient(135deg, #007bff, #00d2ff);
     color: white;
@@ -266,6 +287,27 @@ nav ul li a:hover {
 .create_new_user-card button:hover {
     background: linear-gradient(135deg, #0056b3, #0098d4);
 }
+
+/* Flash messages */
+.flash-messages {
+    margin-top: 20px;
+}
+
+.alert {
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    color: white;
+}
+
+.alert-success {
+    background-color: #4CAF50;
+}
+
+.alert-error {
+    background-color: #f44336;
+}
+
 
 .flash-messages {
     margin-top: 15px;

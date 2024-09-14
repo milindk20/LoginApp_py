@@ -3,48 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>create_new_user</title>
+    <title>Create New User</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        
+    </style>
 </head>
 <body>
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Flask App</title>
-        <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-    </head>
-    <body>
-        {% include 'header.html' %}
-        <main style="padding-top: 5%;">
-
-            <div class="create_new_user-container">
-                <div class="create_new_user-card">
-                  <h2>Create New User</h2>
-                    <form method="POST" action="{{ url_for('create_new_user') }}">
+    {% include 'header.html' %}
+    <main>
+        <div class="create_new_user-container">
+            <div class="create_new_user-card">
+                <h2>Create New User</h2>
+                <form method="POST" action="{{ url_for('create_new_user') }}">
+                    <div class="form-container">
                         <label for="username">Username</label>
                         <input type="text" id="username" name="username" placeholder="Enter your username" required>
-                        <label for="username">Email</label>
+                        
+                        <label for="name">Name</label>
+                        <input type="text" id="name" name="name" placeholder="Enter your Name">
+                        
+                        <label for="mobileno">Mobile Number</label>
+                        <input type="text" id="mobileno" name="mobileno" placeholder="Enter your Mobile Number">
+                        
+                        <label for="email">Email</label>
                         <input type="email" id="email" name="email" placeholder="Enter your email" required>
+
+                        <label for="role">Role</label>
+                        <select id="role" name="role" required placeholder="Select Role">
+                            <option value="user">User</option>
+                            <option value="admin">Admin</option>
+                        </select>
+
                         <label for="password">Password</label>
                         <input type="password" id="password" name="password" placeholder="Enter your password" required>
+
+                        <label for="cpassword">Confirm Password</label>
+                        <input type="password" id="Confirm-Password" name="cpassword" placeholder="Confirm your password" required>
                         
-                        <label for="password">Confirm-Password</label>
-                        <input type="password" id="Confirm-Password" name="cpassword" placeholder="Enter your password again to confirm" required>
-                        
-                        <button type="submit">Create New User</button>
-                    </form>
-                    {% with messages = get_flashed_messages(with_categories=true) %}
-                        {% if messages %}
-                            <div class="flash-messages">
-                                {% for category, message in messages %}
-                                    <div class="alert alert-{{ category }}">
-                                        {{ message }}
-                                    </div>
-                                {% endfor %}
-                            </div>
-                        {% endif %}
-                    {% endwith %}
-                </div>
+                    </div>
+                    <button type="submit">Create New User</button>
+                </form>
+                
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        <div class="flash-messages">
+                            {% for category, message in messages %}
+                                <div class="alert alert-{{ category }}">
+                                    {{ message }}
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                {% endwith %}
             </div>
-        </main>
+        </div>
+    </main>
 </body>
 </html>

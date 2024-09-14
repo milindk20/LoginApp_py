@@ -84,6 +84,7 @@ def create_new_user():
         if request.method == 'POST':
             username = str(request.form['username'])
             email = str(request.form['email'])
+            role = str(request.form['role'])
             password = str(request.form['password'])
 
             cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
@@ -92,19 +93,20 @@ def create_new_user():
             cursor.execute(f'SELECT count(1) as "countofuser" FROM users WHERE username = "{username}"')
             count=cursor.fetchone()
             if (count['countofuser'] >=1):
-                flash(f'Username {username} already exists!! please try a different one!!','danger')
+                flash(f'Username \"{username}\" already exists!! please try a different one!!','danger')
                 flag=1
             #Checkes if email exists already
             cursor.execute(f'SELECT count(1) as "countofuser" FROM users WHERE email = "{email}"')
             count=cursor.fetchone()
             if (count['countofuser'] >=1):
-                flash(f'email {email} already exists!! please try a different one!!','danger')
+                flash(f'email \"{email}\" already exists!! please try a different one!!','danger')
                 flag=1
             # Query database to insert the new user exists
             if flag==0:
-                cursor.execute('INSERT INTO users (username,email, password) VALUES (%s,%s, %s);', (username,email, password))
+                cursor.execute('INSERT INTO users (username,email, password,role) VALUES (%s,%s, %s,%s);', 
+                               (username,email, password,role))
                 cursor.execute('commit')
-                flash(f'User "{username}" ha been created successfully!!','success')
+                flash(f'User "{username}" has been created successfully!!','success')
         return render_template('create_user.html')
     
     elif session_check() !=1:
