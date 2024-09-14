@@ -232,8 +232,9 @@ nav ul li a:hover {
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
+    min-height: 80vh;
     padding: 20px;
+    padding-top: 85px;
     width: 100%;
 }
 
@@ -354,7 +355,7 @@ thead th {
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
+    min-height: 90vh;
     padding: 20px;
     width: 100%;
 }
@@ -460,7 +461,7 @@ thead th {
 }
 
 /* Error message - red */
-.alert-danger .alert-error {
+.alert-danger {
     color: white;
     background-color: red;
     padding: 10px;

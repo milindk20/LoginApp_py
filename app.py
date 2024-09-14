@@ -72,7 +72,7 @@ def login():
             session['username'] = user['username']
             return redirect(url_for('home'))
         else:
-            flash('Invalid username or password')
+            flash('Invalid username or password','danger')
     
     return render_template('login.html')
 
@@ -170,10 +170,56 @@ def edit_profile():
             cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
             username=session['username']
             cursor.execute(f'SELECT * FROM users where username=\'{username}\'')
-            user = cursor.fetchone()
+            users = cursor.fetchone()
         # Render the edit profile page
         #user = getuser()  # Replace with your user-fetching logic
-        return render_template('edit_profile.html', user=user)
+        return render_template('edit_profile.html', user=users)
+
+    else:
+        return redirect(url_for('login'))
+
+@app.route('/change_password', methods=['GET', 'POST'])
+def change_password():
+    # Example: Check if the user is logged in
+    if session_check():
+        if request.method == 'POST':
+            # Handle the form submission for profile editing
+            username=session['username']
+            current_password = request.form.get('current-password')
+            new_password = request.form.get('new-password')
+            confirm_password = request.form.get('confirm-password')
+            # Update the user in the database logic here...
+            cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+            cursor.execute(f'SELECT password FROM users where username=\'{username}\'')
+            old_password=cursor.fetchone()['password']
+            print(old_password)
+            if old_password==current_password:
+                if new_password==confirm_password:
+                    cursor.execute(
+                        '''
+                        UPDATE users 
+                        SET password=%s
+                        WHERE password=%s and username = %s
+                        ''', 
+                        (confirm_password,current_password, username)
+                    )
+                    cursor.execute('commit')
+                    flash('Password changed successfully','success')
+                else:
+                    flash('new password did not matched with the confirm password, please try again !!','danger')
+            else:
+                flash("Current password didnot match, please try again!!",'danger')
+
+            return redirect(url_for('profile'))  # Redirect to the profile page after successful update
+
+        if request.method=="GET":  
+            cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+            username=session['username']
+            cursor.execute(f'SELECT * FROM users where username=\'{username}\'')
+            users = cursor.fetchone()
+        # Render the edit profile page
+        #user = getuser()  # Replace with your user-fetching logic
+        return render_template('change_password.html', user=users)
 
     else:
         return redirect(url_for('login'))
