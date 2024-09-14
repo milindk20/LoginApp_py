@@ -5,27 +5,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Profile</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+
+    </style>
 </head>
 <body>
-
-<header>
     {% include 'header.html' %}
-</header>
+    <main>
+        <div class="edit_user-container">
+            <div class="edit_user-card">
+                <h2>Editing for user: {{ user.username }}</h2>
 
-<main style="padding-top: 7%;">
-    <div class="container">
-        <h1>Edit Profile</h1>
-        <form action="{{ url_for('edit_profile') }}" method="POST">
-            <label for="username">Username:</label>
-            <input type="text" id="username" name="username" value="{{ user.username }}" required>
+                <form method="POST" action="{{ url_for('edit_profile') }}">
+                    <div class="form-container">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" name="name" value="{{ user.name }}">
+                        
+                        <label for="mobileno">Mobile Number</label>
+                        <input type="text" id="mobileno" name="mobileno" value="{{ user.mobileno }}">
+                        
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" value="{{ user.email }}" required>
 
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" value="{{ user.email }}" required>
-
-            <button type="submit">Save Changes</button>
-        </form>
-    </div>
-</main>
-
+                        <label for="role">Role</label>
+                        <select id="role" name="role" required value="{{ user.role }}">
+                            <option value="{{ user.role }}">Current: {{ user.role }}</option>
+                            <option value="user">User</option>
+                            <option value="admin">Admin</option>
+                        </select>
+                    </div>
+                    <button type="submit">Save Changes</button>
+                </form>
+                
+                
+            </div>
+        </div>
+    </main>
 </body>
 </html>

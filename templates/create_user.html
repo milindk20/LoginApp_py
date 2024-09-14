@@ -15,6 +15,17 @@
         <div class="create_new_user-container">
             <div class="create_new_user-card">
                 <h2>Create New User</h2>
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        <div class="flash-messages">
+                            {% for category, message in messages %}
+                                <div class="alert alert-{{ category }}">
+                                    {{ message }}
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                {% endwith %}
                 <form method="POST" action="{{ url_for('create_new_user') }}">
                     <div class="form-container">
                         <label for="username">Username</label>
@@ -45,17 +56,7 @@
                     <button type="submit">Create New User</button>
                 </form>
                 
-                {% with messages = get_flashed_messages(with_categories=true) %}
-                    {% if messages %}
-                        <div class="flash-messages">
-                            {% for category, message in messages %}
-                                <div class="alert alert-{{ category }}">
-                                    {{ message }}
-                                </div>
-                            {% endfor %}
-                        </div>
-                    {% endif %}
-                {% endwith %}
+                
             </div>
         </div>
     </main>

@@ -85,6 +85,8 @@ def create_new_user():
             username = str(request.form['username'])
             email = str(request.form['email'])
             role = str(request.form['role'])
+            name = str(request.form['name'])
+            mobileno = str(request.form['mobileno'])
             password = str(request.form['password'])
 
             cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
@@ -103,8 +105,8 @@ def create_new_user():
                 flag=1
             # Query database to insert the new user exists
             if flag==0:
-                cursor.execute('INSERT INTO users (username,email, password,role) VALUES (%s,%s, %s,%s);', 
-                               (username,email, password,role))
+                cursor.execute('INSERT INTO users (username,email, password,role,name,mobileno) VALUES (%s,%s, %s,%s,%s,%s);', 
+                               (username,email, password,role,name,mobileno))
                 cursor.execute('commit')
                 flash(f'User "{username}" has been created successfully!!','success')
         return render_template('create_user.html')
@@ -141,22 +143,40 @@ def profile():
 @app.route('/edit_profile', methods=['GET', 'POST'])
 def edit_profile():
     # Example: Check if the user is logged in
-    if 'username' not in session:
-        flash('You need to log in to edit your profile', 'warning')
-        return redirect(url_for('login'))  # Redirect to the login page if not logged in
+    if session_check():
+        if request.method == 'POST':
+            # Handle the form submission for profile editing
+            username=session['username']
+            new_email = request.form.get('email')
+            new_name = request.form.get('name')
+            new_role = request.form.get('role')
+            new_mobileno = request.form.get('mobileno')
+            # Update the user in the database logic here...
+            cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+            cursor.execute(
+                '''
+                UPDATE users 
+                SET email = %s, role = %s, name = %s, mobileno = %s 
+                WHERE username = %s
+                ''', 
+                (new_email, new_role, new_name, str(new_mobileno), username)
+            )
+            cursor.execute('commit')
+            flash(f'User "{username}" has been created successfully!!','success')
+            flash('Profile updated successfully!', 'success')
+            return redirect(url_for('profile'))  # Redirect to the profile page after successful update
 
-    if request.method == 'POST':
-        # Handle the form submission for profile editing
-        new_email = request.form.get('email')
-        new_username = request.form.get('username')
-        # Update the user in the database logic here...
-        
-        flash('Profile updated successfully!', 'success')
-        return redirect(url_for('profile'))  # Redirect to the profile page after successful update
+        if request.method=="GET":  
+            cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+            username=session['username']
+            cursor.execute(f'SELECT * FROM users where username=\'{username}\'')
+            user = cursor.fetchone()
+        # Render the edit profile page
+        #user = getuser()  # Replace with your user-fetching logic
+        return render_template('edit_profile.html', user=user)
 
-    # Render the edit profile page
-    user = getuser()  # Replace with your user-fetching logic
-    return render_template('edit_profile.html', user=user)
+    else:
+        return redirect(url_for('login'))
 
 
 # Logout route
