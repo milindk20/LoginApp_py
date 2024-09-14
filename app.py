@@ -36,7 +36,7 @@ mysql = MySQL(app)
 
 #======================================Custom Functions=======================================================
 def session_check():
-    if session['logged_in'] == True:
+    if 'logged_in' in session and session['logged_in']:
         check=1
         print(check)
     else:
