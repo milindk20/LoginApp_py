@@ -6,10 +6,8 @@
         <nav>
             <ul>
                 <li><a href="{{ url_for('home') }}">Home</a></li>
-            {% if session.get('role')=='admin' %}
                 <li><a href="{{ url_for('create_new_user') }}">Create New User</a></li>
                 <li><a href="{{ url_for('users_list') }}">Users List</a></li>
-            {% endif %}
             </ul>
         </nav>
         <div class="user-greeting">

@@ -39,9 +39,18 @@ mysql = MySQL(app)
 def session_check():
     if 'logged_in' in session and session['logged_in']:
         check=1
-        print(check)
+        print("loggedin")
     else:
         check=0
+    return check
+def admin_check():
+    if session['role']=='admin':    
+        check=1
+        print('role=admin')
+    else:
+        print('redirecting to html no access')
+        check=0
+
     return check
 #===========================================================================================================
 
@@ -70,17 +79,22 @@ def login():
         if user:
             session['logged_in'] = True
             session['username'] = user['username']
+            session['role'] = user['role']
             return redirect(url_for('home'))
         else:
             flash('Invalid username or password','danger')
     
     return render_template('login.html')
 
+@app.route('/no_access')
+def noaccess():
+    if session_check():
+        return render_template('noAccess.html')
 
 # create_new_user route
 @app.route('/create_new_user', methods=['GET', 'POST'])
 def create_new_user():
-    if session_check()==1:
+    if session_check() and admin_check():
         if request.method == 'POST':
             username = str(request.form['username'])
             email = str(request.form['email'])
@@ -109,35 +123,35 @@ def create_new_user():
                                (username,email, password,role,name,mobileno))
                 cursor.execute('commit')
                 flash(f'User "{username}" has been created successfully!!','success')
-        return render_template('create_user.html')
+        return render_template('admin/create_user.html')
     
-    elif session_check() !=1:
-            return redirect(url_for('login'))
+    else:
+        return redirect(url_for('noaccess'))
 
 
 # users_list route
 @app.route('/users_list')
 def users_list():
-    if session_check()==1:
+    if session_check() and admin_check():
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
         cursor.execute('SELECT * FROM users')
         users = cursor.fetchall()
-        return render_template('users_list.html', users=users)
+        return render_template('admin/users_list.html', users=users)
 
-    elif session_check() !=1:
-            return redirect(url_for('login'))
+    else:
+        return redirect(url_for('noaccess'))
     
 @app.route('/profile')
 def profile():
-    if session_check()==1:
+    if session_check():
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
         username=session['username']
         cursor.execute(f'SELECT * FROM users where username=\'{username}\'')
         users = cursor.fetchone()
         return render_template('profile.html', user=users)
 
-    elif session_check() !=1:
-            return redirect(url_for('login'))
+    else:
+        return redirect(url_for('login'))
 
 
 @app.route('/edit_profile', methods=['GET', 'POST'])
@@ -235,4 +249,4 @@ def logout():
 
 # StartApp
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=5000,debug=True)

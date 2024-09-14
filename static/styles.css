@@ -5,6 +5,12 @@ body {
     margin: 0;
     padding: 0;
 }
+.welcome_user{
+    background: linear-gradient(135deg, #007bff, #00d2ff);
+    -webkit-background-clip: text;
+    color: transparent; /* Make text transparent */
+    background-clip: text;
+}
 
 main {
     padding-top: 7%;
@@ -14,7 +20,72 @@ main {
     flex-direction: column;
 }
 
-/*==================== header ==================================================*/
+/* ======================================== header ==================================================*/
+
+.logo h1{
+    background: linear-gradient(135deg, #007bff, #00d2ff);
+    -webkit-background-clip: text;
+    color: transparent; /* Make text transparent */
+    background-clip: text;}
+
+header {
+    background-color: #333;
+    color: white;
+    padding: 5px 0;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+header button, .dropdown-content {
+    background: linear-gradient(135deg, #007bff, #00d2ff);
+    border-radius: 10px;
+}
+
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+
+nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+nav ul li {
+    margin: 0 15px;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+nav ul li a:hover {
+    text-decoration: underline;
+    background: linear-gradient(135deg, #007bff, #00d2ff);
+    -webkit-background-clip: text;
+    color: transparent; /* Make text transparent */
+    background-clip: text;
+}
+
+.user-greeting {
+    font-size: 16px;
+    width: 200px;
+}
+
+
 .dropbtn {
     background: linear-gradient(135deg, #007bff, #00d2ff);
     color: white;
@@ -59,21 +130,6 @@ main {
     background: linear-gradient(135deg, #0056b3, #0098d4);
 }
 
-header {
-    background-color: #333;
-    color: white;
-    padding: 10px 0;
-    position: fixed;
-    width: 100%;
-    top: 0;
-    left: 0;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-}
-
-header button, .dropdown-content {
-    background: linear-gradient(135deg, #007bff, #00d2ff);
-    border-radius: 10px;
-}
 
 /*============================================== login ==============================================*/
 
@@ -183,50 +239,6 @@ header button, .dropdown-content {
 }
 
 
-.container {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
-}
-
-.logo h1 {
-    margin: 0;
-    font-size: 24px;
-}
-
-.logo a {
-    color: white;
-    text-decoration: none;
-}
-
-nav ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-}
-
-nav ul li {
-    margin: 0 15px;
-}
-
-nav ul li a {
-    color: white;
-    text-decoration: none;
-    font-size: 16px;
-}
-
-nav ul li a:hover {
-    text-decoration: underline;
-}
-
-.user-greeting {
-    font-size: 16px;
-    width: 200px;
-}
 
 /*=========================================== create new user ===========================================*/
 /* Flexbox layout for the form */
@@ -254,7 +266,6 @@ nav ul li a:hover {
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
 }*/
 
-/* Card header */
 .create_new_user-card h2 {
     margin-bottom: 20px;
     font-size: 28px;
@@ -262,43 +273,6 @@ nav ul li a:hover {
     text-align: center;
     margin-top: 0px;
 }
-
-/* Form container layout for 2-column structure */
-.form-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-}
-
-.form-container label,
-.form-container input {
-    width: 28%; /* 48% width to create space between fields */
-}
-
-.form-container input, select {
-    padding: 12px;
-    margin-bottom: 15px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    font-size: 16px;
-    box-sizing: border-box;
-    width: 55%; /* Adjusted width */
-}
-
-.form-container label {
-    display: block;
-    margin: 10px 0 5px;
-    font-weight: 600;
-    color: #555;
-}
-
-/* Input focus effect */
-.form-container input:focus {
-    border-color: #007bff;
-    outline: none;
-    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
-}
-
 
 /* Submit button styling */
 .create_new_user-card button {
@@ -335,7 +309,6 @@ table th, table td {
     border: 1px solid #ddd;
 }
 
-/* Sticky header */
 thead th {
     position: sticky;
     top: 0;
@@ -382,7 +355,7 @@ thead th {
 }
 
 .profile-container button {
-    background-color: #007BFF;
+    background: linear-gradient(135deg, #007bff, #00d2ff);
     color: white;
     border: none;
     padding: 10px 20px;
@@ -391,8 +364,8 @@ thead th {
     font-size: 16px;
 }
 
-.profile-container button:hover {
-    background-color: #0056b3;
+.profile-container  button:hover {
+    background: linear-gradient(135deg, #0056b3, #0098d4);
 }
 
 /*============================== edit profile page ==============================*/
@@ -421,7 +394,6 @@ thead th {
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
 }*/
 
-/* Card header */
 .edit_user-card h2 {
     margin-bottom: 20px;
     font-size: 28px;
@@ -438,7 +410,7 @@ thead th {
 
 .form-container label,
 .form-container input {
-    width: 28%; /* 48% width to create space between fields */
+    width: 38%; /* 48% width to create space between fields */
 }
 
 .form-container input, select {
