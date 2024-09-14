@@ -1,3 +1,4 @@
+from getpass import getuser
 import time
 from flask import Flask, render_template, redirect, url_for, request, session, flash
 from flask_mysqldb import MySQL
@@ -121,6 +122,39 @@ def users_list():
 
     elif session_check() !=1:
             return redirect(url_for('login'))
+    
+@app.route('/profile')
+def profile():
+    if session_check()==1:
+        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        username=session['username']
+        cursor.execute(f'SELECT * FROM users where username=\'{username}\'')
+        users = cursor.fetchone()
+        return render_template('profile.html', user=users)
+
+    elif session_check() !=1:
+            return redirect(url_for('login'))
+
+
+@app.route('/edit_profile', methods=['GET', 'POST'])
+def edit_profile():
+    # Example: Check if the user is logged in
+    if 'username' not in session:
+        flash('You need to log in to edit your profile', 'warning')
+        return redirect(url_for('login'))  # Redirect to the login page if not logged in
+
+    if request.method == 'POST':
+        # Handle the form submission for profile editing
+        new_email = request.form.get('email')
+        new_username = request.form.get('username')
+        # Update the user in the database logic here...
+        
+        flash('Profile updated successfully!', 'success')
+        return redirect(url_for('profile'))  # Redirect to the profile page after successful update
+
+    # Render the edit profile page
+    user = getuser()  # Replace with your user-fetching logic
+    return render_template('edit_profile.html', user=user)
 
 
 # Logout route
